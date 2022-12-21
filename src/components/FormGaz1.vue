@@ -1,7 +1,59 @@
 <template>
-  <div>
-    <Form @submit="onSubmit">
-      <AppSelect label="test" name="t1" rules="required" :options="[ { label: 'test', value: '1' } ]" />
+  <div class="page wrapper">
+    <h1 class="h1 width-640">
+      Заключение договора на техническое обслуживание и&nbsp;ремонт газовых сетей и оборудования
+    </h1>
+    <Form class="width-480 tw-space-y-2" @submit="onSubmit">
+      <!-- <AppSelect rules="required" label="Тип заявителя" name="type" :options="typeOptions" />
+      <AppSelect rules="required" label="Объект" name="object" :options="objectOptions" />
+
+      <FormGroup class="tw-space-y-2" label="Данные заявителя">
+        <AppInput rules="required" label="Фамилия" name="clientData.lastName" />
+        <AppInput rules="required" label="Имя" name="clientData.name" />
+        <AppInput rules="required" label="Отчество" name="clientData.patronimyc" />
+      </FormGroup>
+
+      <FormGroup class="tw-space-y-2" label="Паспорт">
+        <FieldsPassport namePrefix="passport" />
+      </FormGroup> -->
+
+      <FormGroup class="tw-space-y-2" label="Почтовый адрес">
+        <FieldsAddress namePrefix="mailAddress" />
+        <!-- <AppInput rules="required" label="Телефон" name="mailAddress.phone" />
+        <AppInput rules="required" label="Электронная почта" name="mailAddress.email" />
+        <AppInput label="Дополнительный телефон" name="mailAddress.additionalPhone" /> -->
+      </FormGroup>
+
+      <!-- <FormGroup class="tw-space-y-2" label="Доверенность">
+        <AppSelect
+          rules="required"
+          label="Заявку подаю по доверенности"
+          name="confidant.hasDocument"
+          :options="confidantOptions"
+        />
+        <FieldsPassport namePrefix="confidant.passport" />
+        <FieldsAddress namePrefix="confidant.address" />
+        <AppInput rules="required" label="Номер доверенности" name="confidant.document.number" />
+        <AppInput rules="required" label="Дата доверенности" name="confidant.document.createdAt" />
+        <AppInput rules="required" label="Действительна до" name="confidant.document.untilDate" />
+      </FormGroup>
+
+      <FormGroup class="tw-space-y-2" label="Способ получения уведомлений">
+        <AppSelect
+          rules="required"
+          label="Способ получения оригиналов документов"
+          name="notifications.recieveMethod"
+          :options="notificationOptions"
+        />
+        <FieldsAddress namePrefix="notifications.address" />
+      </FormGroup>
+
+      <FormGroup class="tw-space-y-2" label="Данные об объекте">
+        <AppInput rules="required" label="Наименование объекта" name="objectData.name" />
+        <AppInput rules="required" label="Кадастровый номер объекта" name="objectData.cadastrNumber" />
+        <FieldsAddress namePrefix="objectData" />
+      </FormGroup> -->
+
       <AppButton type="submit">Отправить</AppButton>
     </Form>
   </div>
@@ -9,233 +61,33 @@
 
 <script setup lang="ts">
   import AppSelect from '@/core/AppSelect.vue';
+  import AppInput from '@/core/AppInput.vue';
   import AppButton from '@/core/AppButton.vue';
+  import FormGroup from '@/components/FormGroup.vue';
+  import FieldsAddress from '@/components/FieldsAddress.vue';
+  import FieldsPassport from '@/components/FieldsPassport.vue';
   import { Form } from 'vee-validate';
-  import {
-    MailAddress,
-    PersonData,
-    ULData,
-    PassportData,
-    NoConfidant,
-    HasConfidant,
-    ObjectData,
-    PickupNotifications,
-    MailNotifications
-  } from '@/types/form-types';
 
-  type FLFilesBase = {
-    inn: object
-    passport: object,
-    snils: object,
-    contrAgentRef: object,
-    techPassport: object,
-    gasContract: object,
-    bosLetter?: never,
-    contrAgentMap?: never,
-    branchRules?: never,
-    ogrn?: never,
-    placeNalog?: never,
-    ugrul?: never,
-    buhBalance?: never,
-    contAgentPassport?: never,
-    contrAgentAccess?: never,
-    nextContrAgentPassport?: never,
-    bankAccount?: never,
-    informStatisticLetter?: never,
-    owenrsInfo?: never,
-    gasAcceptAct?: never,
-  }
+  const typeOptions = [
+    { label: 'Физическое лицо', value: 'FL' },
+    { label: 'Индивидуальный предприниматель', value: 'IP' },
+    { label: 'Юридическое лицо', value: 'UL' },
+  ];
 
-  type IPFiles = {
-    ogrnip: object,
-    cpo: object,
-    nalogDeclare: object,
-    financialReport: object,
-    egrip: object,
-    acceptAct?: never,
-  } & FLFilesBase;
+  const objectOptions = [
+    { label: 'Коммунально-бытовой (КБО)', value: 'kbo' },
+    { label: 'Коммерческий (ПП).', value: 'PP' },
+  ];
 
-  type FLFiles = {
-    cpo?: object,
-    acceptAct: object,
-    ogrnip?: never,
-    nalogDeclare?: never,
-    financialReport?: never,
-    egrip?: never,
-  } & FLFilesBase;
+  const notificationOptions = [
+    { label: 'Самостоятельно', value: 'pickup' },
+    { label: 'По почте', value: 'mail' },
+  ];
 
-  type ULFiles = {
-    bosLetter: object,
-    contrAgentMap: object,
-    branchRules: object,
-    ogrn: object,
-    placeNalog: object,
-    ugrul: object,
-    cpo?: object,
-    buhBalance: object,
-    contAgentPassport: object,
-    contrAgentAccess: object,
-    nextContrAgentPassport: object,
-    bankAccount: object,
-    informStatisticLetter: object,
-    owenrsInfo: object,
-    gasContract: object,
-    gasAcceptAct: object,
-    acceptAct?: never,
-    ogrnip?: never,
-    nalogDeclare?: never,
-    financialReport?: never,
-    egrip?: never,
-  }
-
-  type BaseForm = {
-    object: 'kbo' | 'PP',
-    mailAddress: MailAddress,
-    objectData: ObjectData,
-    notifications: PickupNotifications | MailNotifications,
-  }
-
-  type FLFields = {
-    clientData: PersonData,
-    passport: PassportData,
-  } & BaseForm;
-
-  type FormUL = {
-    type: 'UL',
-    isSmallBuisness: 'No',
-    clientData: ULData,
-    confidant: NoConfidant,
-    files: ULFiles
-  } & BaseForm;
-
-  type FormULSmallBuisness = {
-    type: 'UL',
-    isSmallBuisness: 'Yes',
-    clientData: ULData,
-    confidant: NoConfidant,
-    files: ULFiles & { smallBuisnessDeclare: object, bosRef?: never }
-  } & BaseForm;
-
-  type FormULWithConfident = {
-    type: 'UL',
-    isSmallBuisness: 'No',
-    clientData: ULData,
-    confidant: HasConfidant,
-    files: ULFiles & { bosRef: object, smallBuisnessDeclare?: never }
-  } & BaseForm;
-
-  type FormULWithConfAndSmallBuisness = {
-    type: 'UL',
-    isSmallBuisness: 'Yes',
-    clientData: ULData,
-    confidant: HasConfidant,
-    files: ULFiles & { bosRef: object, smallBuisnessDeclare: object }
-  } & BaseForm;
-
-  type FormFL = {
-    type: 'FL',
-    confidant: NoConfidant,
-    files: FLFiles & { confidantPassport?: never }
-  } & FLFields;
-
-  type FormFLWithConfidant = {
-    type: 'FL',
-    confidant: HasConfidant,
-    files: FLFiles & { confidantPassport: object }
-  } & FLFields;
-
-  type FormIP = {
-    type: 'IP',
-    confidant: NoConfidant,
-    files: IPFiles & { confidantPassport?: never }
-  } & FLFields;
-
-  type FormIPWithConfidant = {
-    type: 'IP',
-    confidant: HasConfidant,
-    files: IPFiles & { confidantPassport: object }
-  } & FLFields;
-
-  type FormValues =
-    FormFL | FormFLWithConfidant | FormIP | FormIPWithConfidant | FormUL |
-    FormULWithConfident | FormULSmallBuisness | FormULWithConfAndSmallBuisness;
-
-  const t: FormValues = {
-    type: 'UL',
-    object: 'PP',
-    isSmallBuisness: 'No',
-    clientData: {
-      inn: '1',
-      kpp: '1',
-      ogrn: '1',
-      firstName: '1',
-      fullName: '1',
-    },
-    mailAddress: {
-      city: '1',
-      street: '1',
-      house: '1',
-      flat: '1',
-      phone: '1',
-      email: '1@1.ru',
-      additionalPhone: '1',
-    },
-    objectData: {
-      name: '1',
-      cadastrNumber: '0000',
-      city: '1',
-      street: '1',
-      house: '1',
-      flat: '1'
-    },
-    confidant: {
-      hasDocument: 'Yes',
-      passport: {
-        type: 'RF',
-        serial: '0000',
-        number: '0000000',
-        kod: '020-008',
-        issued: 'MVD',
-        issuedDate: '01.01.1900'
-      },
-      address: {
-        city: '1',
-        street: '1',
-        house: '1',
-        flat: '1'
-      },
-      document: {
-        number: '0000',
-        createdAt: '01.01.1900',
-        untilDate: '01.01.1900'
-      }
-    },
-    notifications: {
-      sms: true,
-      email: false,
-      recieveMethod: 'pickup',
-    },
-    files: {
-      bosRef: {},
-      // smallBuisnessDeclare: {},
-      bosLetter: {},
-      contrAgentMap: {},
-      branchRules: {},
-      ogrn: {},
-      placeNalog: {},
-      ugrul: {},
-      cpo: {},
-      buhBalance: {},
-      contAgentPassport: {},
-      contrAgentAccess: {},
-      nextContrAgentPassport: {},
-      bankAccount: {},
-      informStatisticLetter: {},
-      owenrsInfo: {},
-      gasContract: {},
-      gasAcceptAct: {},
-    }
-  }
+  const confidantOptions = [
+    { label: 'Нет', value: 'No' },
+    { label: 'Да', value: 'Yes' },
+  ];
 
   const onSubmit = (values: object) => {
     console.log(values);

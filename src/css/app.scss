@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  body {
+    background: theme('colors.gray.100');
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+  }
+
+  h1, .h1 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 20px;
+  }
+}
+
+@layer utilities {
+  .wrapper {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .page {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .width-640 {
+    max-width: 640px;
+  }
+
+  .width-480 {
+    max-width: 480px;
+  }
+}
