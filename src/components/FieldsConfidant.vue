@@ -10,8 +10,8 @@
       <FieldsPassport namePrefix="confidant.passport" />
       <FieldsAddress namePrefix="confidant.address" />
       <AppInput rules="required" label="Номер доверенности" name="confidant.document.number" />
-      <AppInput rules="required" label="Дата доверенности" name="confidant.document.createdAt" />
-      <AppInput rules="required" label="Действительна до" name="confidant.document.untilDate" />
+      <AppInput type="date" rules="required" label="Дата доверенности" name="confidant.document.createdAt" />
+      <AppInput type="date" rules="required" label="Действительна до" name="confidant.document.untilDate" />
     </template>
 
   </FormGroup>

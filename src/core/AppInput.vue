@@ -1,13 +1,22 @@
 <template>
   <div class="app-input">
     <AppLabel :for="name" :required="isRequired">{{ label }}</AppLabel>
-    <input class="app-input__input" v-bind="$attrs" :id="name" :type="type" v-model="field.value.value" />
+    <input
+      class="app-input__input"
+      v-bind="$attrs"
+      :id="name"
+      :type="type"
+      v-model="field.value.value"
+      v-maska
+      :data-maska="phone === true ? '8 (###) ### ## ##' : maska ?? ''"
+    />
     <ErrorMessage v-if="field.errorMessage">
       {{ field.errorMessage }}
     </ErrorMessage>
   </div>
 </template>
 <script setup lang="ts">
+  import { vMaska } from "maska"
   import AppLabel from './AppLabel.vue';
   import ErrorMessage from './AppErrorMessage.vue'
   import { useField } from 'vee-validate';
@@ -18,7 +27,9 @@
     label: string,
     name: string,
     rules?: string,
-    modelValue?: string
+    modelValue?: string,
+    phone?: boolean
+    maska?: string
   }
 
   const props = withDefaults(defineProps<Props>(), { type: 'text' });
@@ -45,6 +56,8 @@
   });
 
   watch(modelValue, (newVal) => {
+    console.log(newVal);
+
     field.value.value = newVal;
   });
 </script>

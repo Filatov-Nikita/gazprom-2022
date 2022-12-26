@@ -1,9 +1,9 @@
 <template>
   <AppSelect rules="required" label="Тип" :name="names.type" :options="[{ label: 'Паспорт РФ', value: 'RF' }]" />
-  <AppInput rules="required" label="Серия" :name="names.serial" />
-  <AppInput rules="required" label="Номер" :name="names.number" />
+  <AppInput rules="required|length:4" maska="####" label="Серия" :name="names.serial" />
+  <AppInput rules="required|length:6" maska="######" label="Номер" :name="names.number" />
   <AppInput rules="required" label="Кем выдан" :name="names.kod" />
-  <AppInput rules="required" label="Дата выдачи документа" :name="names.issuedDate" />
+  <AppInput type="date" rules="required" label="Дата выдачи документа" :name="names.issuedDate" />
 </template>
 
 <script setup lang="ts">

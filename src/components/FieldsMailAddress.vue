@@ -1,9 +1,9 @@
 <template>
   <FormGroup class="tw-space-y-2" label="Почтовый адрес">
     <FieldsAddress namePrefix="mailAddress" />
-    <AppInput rules="required" label="Телефон" name="mailAddress.phone" />
-    <AppInput rules="required" label="Электронная почта" name="mailAddress.email" />
-    <AppInput label="Дополнительный телефон" name="mailAddress.additionalPhone" />
+    <AppInput type="tel" rules="required|phone" label="Телефон" name="mailAddress.phone" phone />
+    <AppInput type="email" rules="required|email" label="Электронная почта" name="mailAddress.email" />
+    <AppInput type="tel" rules="phone" label="Дополнительный телефон" name="mailAddress.additionalPhone" phone />
   </FormGroup>
 </template>
 

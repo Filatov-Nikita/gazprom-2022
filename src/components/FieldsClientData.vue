@@ -12,9 +12,9 @@
         name="clientData.isSmallBuisness"
         :options="smallBuisnessOpts"
       />
-      <AppInput rules="required" label="ИНН" name="clientData.inn" />
-      <AppInput rules="required" label="КПП" name="clientData.kpp" />
-      <AppInput rules="required" label="ОГРН" name="clientData.ogrn" />
+      <AppInput rules="required|length:12" maska="############" label="ИНН" name="clientData.inn" />
+      <AppInput rules="required|length:9" maska="#########" label="КПП" name="clientData.kpp" />
+      <AppInput rules="required|length:13" maska="#############" label="ОГРН" name="clientData.ogrn" />
       <AppInput rules="required" label="Краткое наименование организации" name="clientData.firstName" />
       <AppInput rules="required" label="Полное наименование организации" name="clientData.fullName" />
     </template>

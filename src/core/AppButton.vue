@@ -14,9 +14,10 @@
 <style scoped lang="scss">
   .app-button {
     display: inline-block;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 500;
     border-radius: 4px;
-    padding: 8px 16px;
+    padding: 12px 32px;
     background: theme('colors.blue.600');
     color: theme('colors.white');
 
