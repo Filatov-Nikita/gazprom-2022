@@ -115,7 +115,7 @@
   });
 
   function buildOption(suggest: Suggest['data'], value: string): Option {
-    const option: any = {};
+    const option: Record<string, string | null> = {};
 
     optionKeys.forEach(key => {
       option[key] = suggest[key];
@@ -123,7 +123,7 @@
 
     option.value = value;
 
-    return option;
+    return option as Option;
   }
 
   function mapOptions(list: Success['response']): Array<Option>  {
