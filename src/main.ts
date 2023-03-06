@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import store from './store'
-
+import Dev from './Dev.vue'
+import { createPinia } from 'pinia';
 import { defineRule, configure } from 'vee-validate';
 import { required, email, length, min, max, numeric } from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
@@ -9,6 +9,10 @@ import ru from '@vee-validate/i18n/dist/locale/ru.json';
 import '@/css/app.scss';
 // @ts-ignore
 import vClickOutside from "click-outside-vue3"
+
+// main
+
+const pinia = createPinia();
 
 configure({
   generateMessage: localize({
@@ -35,9 +39,9 @@ defineRule('phone', (value: string) => {
 
 import AppSelect from './core/AppSelect.vue';
 
-const app = createApp(App);
+const app = createApp(Dev);
 app.component('AppSelect', AppSelect);
 app
-.use(store)
+.use(pinia)
 .use(vClickOutside)
 .mount('#app');

@@ -12,6 +12,7 @@
     "click-outside-vue3": "^4.0.1",
     "core-js": "^3.8.3",
     "maska": "^2.1.2",
+    "pinia": "^2.0.29",
     "throttle-debounce": "^5.0.0",
     "vee-validate": "^4.7.3",
     "vue": "^3.2.13",

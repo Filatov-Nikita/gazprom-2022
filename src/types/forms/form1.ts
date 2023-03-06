@@ -8,7 +8,7 @@ import {
     ObjectData,
     PickupNotifications,
     MailNotifications
-  } from './form-types';
+  } from './helpers';
 
   type FLFilesBase = {
     inn: object
